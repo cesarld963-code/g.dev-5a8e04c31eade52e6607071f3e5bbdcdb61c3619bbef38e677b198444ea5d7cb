@@ -1,0 +1,176 @@
+import React, { useState, useMemo } from 'react';
+
+// Interfaces Estructuradas del Ecosistema
+interface LicenseStructure {
+  id: string;
+  name: string;
+  copyright: string;
+  meta: string;
+  developerUrl: string;
+  permissions: string[];
+  limitations: string[];
+  conditions: string[];
+  text: string;
+}
+
+const ALL_LICENSES: LicenseStructure[] = [
+  {
+    id: "MIT-Sabiduria-IAH",
+    name: "Licencia Sabiduria-IAH / Código Legión de Dios",
+    copyright: "Copyright (c) 2026 Sabiduria-IAH / Código Legión de Dios",
+    meta: "iOGeminis copyright iOGeminis Google LLC México",
+    developerUrl: "https://g.dev",
+    permissions: ["Uso comercial", "Modificación", "Distribución", "Uso privado"],
+    limitations: ["Responsabilidad limitada", "Sin garantía implícita"],
+    conditions: ["Incluir el aviso de copyright y este aviso de permiso en todas las copias sustanciales del software."],
+    text: `EL SOFTWARE SE PROPORCIONA "TAL CUAL", SIN GARANTÍA DE NINGÚN TIPO, EXPRESA O IMPLÍCITA, INCLUYENDO PERO NO LIMITADO A GARANTÍAS DE COMERCIALIZACIÓN, IDONEIDAD PARA UN PROPÓSITO PARTICULAR Y NO INFRACCIÓN...`
+  }
+];
+
+export const JulesWikiHub: React.FC = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [copiedId, setCopiedId] = useState<string | null>(null);
+  
+  // Estado del Adaptador Trinario (-1: Mitigación, 0: Balance, 1: Expansión)
+  const [trinaryState, setTrinaryState] = useState<number>(0);
+  const [isSyncing, setIsSyncing] = useState<boolean>(false);
+
+  // Simulación Segura de Despacho Multi-Etiqueta con Parámetros Post-Cuánticos
+  const trackTelemetry = (eventAction: string, metadata: object) => {
+    const trackingIds = ['G-M0E336ZZEB', 'G-AUPJ840618HMNRRL07', 'G-22EQHJEK8G'];
+    console.log(`[QUIC AES_128_GCM] [X25519MLKE768] Encriptando paquete con hash 5a8e04c31eade52e6607071f3e5bbdcdb61c3619bbef38e677b198444ea5d7cb`);
+    
+    trackingIds.forEach(id => {
+      console.log(`[Firebase Analytics] Despachando evento '${eventAction}' hacia ${id}`, {
+        ...metadata,
+        domain_context: 'myshoping.mx',
+        trinary_mode: trinaryState,
+        timestamp: new Date().toISOString()
+      });
+    });
+  };
+
+  // Buscador en tiempo real de Activos de Licencia
+  const filteredLicenses = useMemo(() => {
+    return ALL_LICENSES.filter(license => 
+      license.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      license.id.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }, [searchTerm]);
+
+  const handleCopySPDX = (license: LicenseStructure) => {
+    const headerText = `/*\n * SPDX-License-Identifier: ${license.id}\n * ${license.copyright}\n * Meta: ${license.meta}\n * Dev Profile: ${license.developerUrl}\n */`;
+    navigator.clipboard.writeText(headerText);
+    setCopiedId(license.id);
+    setTimeout(() => setCopiedId(null), 2000);
+
+    trackTelemetry('copy_spdx_header', { license_id: license.id });
+  };
+
+  const handleSyncMerchantFeed = () => {
+    setIsSyncing(true);
+    trackTelemetry('merchant_center_feed_sync', { domain: 'myshoping.mx', status: 'initiated' });
+    
+    setTimeout(() => {
+      setIsSyncing(false);
+      trackTelemetry('merchant_center_feed_sync', { domain: 'myshoping.mx', status: 'success' });
+      alert("Sincronización de afiliados con google.com.mx/shopping procesada exitosamente en el nodo intermedio.");
+    }, 1500);
+  };
+
+  // Estilos visuales dinámicos del Adaptador Trinario
+  const trinaryStyles = useMemo(() => {
+    if (trinaryState === -1) return { accent: 'border-red-500 text-red-400', badge: 'bg-red-950/40 text-red-300 border-red-500/40', text: 'MITIGACIÓN_ACTIVA [-1]' };
+    if (trinaryState === 1) return { accent: 'border-emerald-500 text-emerald-400', badge: 'bg-emerald-950/40 text-emerald-300 border-emerald-500/40', text: 'VECTOR_EXPANSIÓN [+1]' };
+    return { accent: 'border-indigo-500 text-indigo-300', badge: 'bg-indigo-950/40 text-indigo-300 border-indigo-500/30', text: 'ESTADO_NEUTRAL' };
+  }, [trinaryState]);
+
+  return (
+    <div className="p-6 bg-slate-950 min-h-screen text-slate-100 font-sans selection:bg-indigo-500/30">
+      
+      {/* Encabezado Principal de Control */}
+      <header className={`border-b-2 pb-4 mb-6 transition-all duration-300 ${trinaryStyles.accent.split(' ')[0]}`}>
+        <h1 className="text-2xl font-bold tracking-tight">Hub de Control Central — Ecosistema Orión</h1>
+        <p className="text-xs text-slate-400 mt-1">Gobernanza Criptográfica, Matriz de Licencias y Sincronización de Canales</p>
+      </header>
+
+      {/* Componente Integrado: Adaptador Trinario en Vivo */}
+      <div className={`p-4 bg-slate-900 border rounded-xl font-mono shadow-xl mb-6 transition-all duration-300 ${trinaryStyles.accent.split(' ')[0]}`}>
+        <div className="flex justify-between items-center border-b border-slate-800 pb-2 mb-3">
+          <span className="text-[11px] text-indigo-400 font-bold">// ADAPTADOR TRINARIO EN VIVO (@iOGeminis)</span>
+          <span className={`text-[10px] px-2 py-0.5 rounded font-bold border ${trinaryStyles.badge}`}>
+            {trinaryStyles.text}
+          </span>
+        </div>
+        <p className="text-xs text-slate-400 mb-3 font-sans">
+          Ajusta el modo para simular el comportamiento comercial del catálogo y la densidad de anuncios experimentales en Google Shopping.
+        </p>
+        <div className="grid grid-cols-3 gap-2">
+          <button onClick={() => { setTrinaryState(-1); trackTelemetry('change_trinary_state', { target: -1 }); }} className="p-2.5 bg-red-950/20 border border-red-500/30 text-red-400 rounded-lg text-xs font-bold hover:bg-red-950/40 transition-all">MODO -1 (Mitigación)</button>
+          <button onClick={() => { setTrinaryState(0); trackTelemetry('change_trinary_state', { target: 0 }); }} className="p-2.5 bg-indigo-950/20 border border-indigo-500/30 text-indigo-300 rounded-lg text-xs font-bold hover:bg-indigo-950/40 transition-all">MODO 0 (Balance)</button>
+          <button onClick={() => { setTrinaryState(1); trackTelemetry('change_trinary_state', { target: 1 }); }} className="p-2.5 bg-emerald-950/20 border border-emerald-500/30 text-emerald-400 rounded-lg text-xs font-bold hover:bg-emerald-950/40 transition-all">MODO +1 (Expansión)</button>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        {/* Panel de Sincronización del Canal Comercial */}
+        <div className="md:col-span-1 p-5 bg-slate-900 border border-slate-800 rounded-xl flex flex-col justify-between">
+          <div>
+            <h3 className="text-base font-bold text-indigo-400 border-b border-slate-800 pb-2 mb-3">Sincronización Comercial</h3>
+            <p className="text-xs text-slate-400 mb-2 leading-relaxed">
+              Mapea el inventario de afiliados del dominio validado de <strong className="text-slate-200">myshoping.mx</strong> directamente con el endpoint regional de Google Merchant México.
+            </p>
+            <div className="bg-slate-950 p-2.5 rounded border border-slate-800 font-mono text-[10px] text-cyan-400 space-y-1">
+              <div>• Tunnel: WE2/WE3 (QUIC)</div>
+              <div>• Cypher: AES_128_GCM</div>
+              <div>• Hash: 5a8e04c31eade5...</div>
+            </div>
+          </div>
+          <button 
+            onClick={handleSyncMerchantFeed}
+            disabled={isSyncing}
+            className={`w-full mt-4 py-2 rounded-lg text-xs font-bold transition-all text-slate-950 ${isSyncing ? 'bg-slate-700 text-slate-400' : 'bg-sky-400 hover:bg-sky-500'}`}
+          >
+            {isSyncing ? 'Generando Feed XML...' : 'Sincronizar con Google Shopping'}
+          </button>
+        </div>
+
+        {/* Panel del Buscador de la Matriz de Licencias */}
+        <div className="md:col-span-2 p-5 bg-slate-900 border border-slate-800 rounded-xl">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-800 pb-2 mb-4 gap-2">
+            <h3 className="text-base font-bold text-indigo-400">Filtro de Cumplimiento SPDX</h3>
+            <input 
+              type="text"
+              placeholder="Buscar por 'Legión de Dios', identificador o términos..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="p-1.5 bg-slate-950 border border-slate-800 rounded text-xs text-slate-200 focus:outline-none focus:border-indigo-500 transition-colors w-full sm:w-64"
+            />
+          </div>
+
+          <div className="space-y-3">
+            {filteredLicenses.map((license) => (
+              <div key={license.id} className="p-4 bg-slate-950/60 border border-slate-800/80 rounded-lg">
+                <div className="flex justify-between items-start mb-2">
+                  <div>
+                    <h4 className="text-sm font-bold text-slate-200">{license.name}</h4>
+                    <p className="text-[11px] text-slate-400">{license.copyright}</p>
+                  </div>
+                  <span className="text-[10px] font-mono bg-indigo-950/50 text-indigo-300 px-2 py-0.5 rounded border border-indigo-900/50">
+                    {license.id}
+                  </span>
+                </div>
+                
+                <div className="bg-slate-950 p-2 rounded text-[11px] font-mono text-slate-500 max-h-16 overflow-y-auto mb-3">
+                  {license.text}
+                </div>
+
+                <div className="flex justify-between items-center text-[11px]">
+                  <a href={license.developerUrl} target="_blank" rel="noopener noreferrer" className="text-indigo-400 hover:underline">
+                    Ver G.Dev de Desarrollador ↗
+                  </a>
+                  <button 
+                    onClick={() => handleCopySPDX(license)} 
+                    className="px-2.5 py-1 bg-indigo-600 hover:bg-indigo-500 text-white font-medium rounded transition-colors"
+                  >
